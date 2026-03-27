@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Student Performance Prediction System</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+
+<div class="container">
+
+<h1>Student Burnout Prediction System</h1>
+
+<p class="subtitle">
+Predictive Model for Academic Burnout Detection
+</p>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="input-group">
+<label>Study Hours</label>
+<input type="number" step="0.1" id="study_hours">
+</div>
+
+<div class="input-group">
+<label>Sleep Hours</label>
+<input type="number" step="0.1" id="sleep_hours">
+</div>
+
+<div class="input-group">
+<label>Stress Level (1-10)</label>
+<input type="number" id="stress_level">
+</div>
+
+<div class="input-group">
+<label>Screen Time</label>
+<input type="number" step="0.1" id="screen_time">
+</div>
+
+<div class="input-group">
+<label>Mental Fatigue (1-10)</label>
+<input type="number" step="0.1" id="mental_fatigue">
+</div>
+
+</div>
+
+<button onclick="predict()">Run Prediction</button>
+
+</div>
+
+<div class="result-card">
+
+<h2>Prediction Result</h2>
+
+<div id="result">Enter values and click Predict</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function predict(){
+
+const data = {
+
+study_hours: document.getElementById("study_hours").value,
+sleep_hours: document.getElementById("sleep_hours").value,
+stress_level: document.getElementById("stress_level").value,
+screen_time: document.getElementById("screen_time").value,
+mental_fatigue: document.getElementById("mental_fatigue").value
+
+};
+
+fetch("/predict",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body: JSON.stringify(data)
+
+})
+
+.then(response => response.json())
+
+.then(result => {
+
+document.getElementById("result").innerHTML =
+result.prediction;
+
+})
+
+}
+
+</script>
+
+</body>
+
+</html>

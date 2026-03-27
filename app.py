@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import pickle
 
 app = Flask(__name__)
@@ -8,7 +8,7 @@ model = pickle.load(open("model/model.pkl", "rb"))
 
 @app.route('/')
 def home():
-    return "Backend is running!"
+    return render_template("index.html")
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
